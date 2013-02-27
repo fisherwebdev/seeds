@@ -1,0 +1,11 @@
+{
+  "name": "Seeds: A Free and Open Twitter Client",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": null,
+    "backbone-amd": null,
+    "lodash": null,
+    "json2": null,
+    "requirejs": null
+  }
+}

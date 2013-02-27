@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Seeds</title>
+  <meta name="description" content="A Free and Open Twitter Client">
+  <meta name="author" content="Bill Fisher">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <link rel="stylesheet" href="app/css/style.css">
+
+  <!--[if lt IE 9]>
+  <script src="app/js/vendor/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+
+<header>
+  <h1>Seeds</h1>
+</header>
+
+
+<section id="seeds-app">
+
+  <div id="seeds-sign-in">
+    <p>Please sign in with your Twitter username:</p>
+    <input type="text" id="seeds-nickname-key" />
+    <button id="seeds-sign-in-button">Sign in!</button>
+  </div>
+
+</section>
+
+
+<script type="text/template" id="seeds-template-tweet">
+  <div class="col-1">
+    <img class="user profile-image" height="48px" width="48px" src="<%= user.profile_image_url %>" alt="" />
+  </div>
+  <div class="col-2">
+    <span class="user name"><%= user.name %></span>&nbsp;
+    <span class="user nickname">@<%= user.screen_name %></span>
+    <span class="tweet-text"><%= text %></span>
+  </div>
+</script>
+
+
+<script type="text/template" id="seeds-template-user">
+  <img src="<%= profile_image_url_original %>" alt="<%= name %>" />
+  <span class="nickname">@<%= screen_name %></span>
+  <span class="name"><%= name %></span>
+  <span class="description"><%= description %></span>
+  <span class="location"><%= location %></span>
+  <a class="url" href="<%= url %>"><%= url %></a>
+</script>
+
+
+
+<script data-main="app/js/main.js" src="app/js/vendor/requirejs/require.js"></script>
+</body>
+</html>
