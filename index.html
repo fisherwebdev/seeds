@@ -54,6 +54,25 @@
   <a class="url" href="<%= url %>"><%= url %></a>
 </script>
 
+<script type="text/template" id="seeds-template-nav">
+  <li data-panel="timeline-home">
+    <a href="/#timeline/home">Home</a>
+  </li>
+  <li data-panel="timeline-mentions">
+    <a href="/#timeline/mentions">Mentions</a>
+  </li>
+  <li data-panel="timeline-me">
+    <a href="/#timeline/me">My Tweets</a>
+  </li>
+  <li data-panel="me">
+    <a href="/#me">My Profile</a>
+  </li>
+</script>
+
+<script type="text/template" id="seeds-template-panel">
+  <h2><%= title %></h2>
+</script>
+
 
 
 <script data-main="app/js/main.js" src="app/js/vendor/requirejs/require.js"></script>

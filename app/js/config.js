@@ -7,7 +7,8 @@ define(function () {
     },
     views: {
       users: {}
-    }
+    },
+    mainViewList: ["homeTimeline", "mentionsTimeline", "meTimeline", "me"]
   };
 
   console.log(window.app);

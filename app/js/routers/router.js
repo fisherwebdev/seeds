@@ -1,45 +1,66 @@
 define(['config', 'backbone'], function () {
 
-  //window.app = window.app || {};
-
   var Workspace = Backbone.Router.extend({
     routes:{
+      '/': 'landing',
       'timeline': 'timeline',
       'timeline/:type': 'timeline',
+      'timeline/user/:nickname': 'timeline',
+      'me': 'user', // TODO: build for this
       'user/:nickname': 'user'
-
     },
 
     initialize: function () {
       console.log('Router!');
     },
 
-    timeline: function (type) {
-      $("#seeds-sign-in").remove();
-      app.views.seedsApp = app.views.seedsApp || new app.views.App;
+    landing: function () {
+      // TODO: perhaps redirect here is user is logged in?
+    },
 
-      var type = type || 'home';
-      app.views.homeTimeline = new app.views.TweetList(type);
-      app.views.homeTimeline.render();
+    timeline: function (type, nickname) {
+      this.ensureAppChrome();
+
+      if (type == "user") {
+        // TODO
+      }
+      else {
+        var type = type || 'home',
+          timelineViewName = type + "Timeline";
+
+        if (!app.views[timelineViewName]) {
+          app.views[timelineViewName] = new app.views.TweetList(type);
+          app.views[timelineViewName].render();
+        }
+        else {
+          console.log("TODO: bring the app.views[timelineViewName] into view!")
+        }
+      }
     },
 
     user: function (nickname) {
-      $("#seeds-sign-in").remove();
-      app.views.seedsApp = app.views.seedsApp || new app.views.App;
+      this.ensureAppChrome();
 
-      var user = new app.models.User({nickname: nickname});
-      app.models.users[nickname] = user;
+      if (!app.views.users[nickname]) {
+        var user = new app.models.User({nickname: nickname});
+        app.models.users[nickname] = user;
+        app.views.users[nickname] = new app.views.User({model: user});
+      }
+      else {
+        console.log("TODO: bring the app.views.user[nickname] into view!")
+      }
+    },
 
-      app.views.users[nickname] = new app.views.User({model: user});
+    ensureAppChrome: function () {
+      if (!app.views.nav) {
+        $("#seeds-sign-in").remove();
+        app.views.nav = new app.views.Nav;
+      }
     }
 
   });
 
-  app.SeedsRouter = new Workspace();
-
-  // Not using pushState due to maintaining total separation from server.
-  // If we wanted to instead implement all of our routes on the server also, we could use pushState and avoid the #.
-  Backbone.history.start();
+  app.SeedsRouter = Workspace;
 
   return app.SeedsRouter;
 })
