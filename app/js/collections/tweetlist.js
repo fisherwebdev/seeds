@@ -1,30 +1,24 @@
-define(['config', 'backbone'], function () {
+define(['config', 'backbone', 'models/tweet'],
+  function (config, Backbone, Tweet) {
 
-  var TweetList = Backbone.Collection.extend({
 
-    model: app.models.Tweet,
+    var TweetList = Backbone.Collection.extend({
 
-    url: function () {
-      return SEEDS_CONFIG.api.base + "/timeline/" + this.type;
-    },
+      model: Tweet,
 
-    initialize: function (type) {
+      url: function () {
+        return SEEDS_CONFIG.api.base + "/timeline/home";
+      },
 
-      if (type == "me") type = "user";
+      initialize: function () {
+        this.fetch({
+          xhrFields: {withCredentials: true} // for CORS with session data
+        });
+      }
 
-      // the timeline type should be one of: home, mentions, user
-      this.type = type || 'home';
+    });
 
-      this.fetch({
-        xhrFields: {withCredentials: true} // for CORS with session data
-      });
 
-      console.log('TweetList Collection!', this);
-    }
-
-  });
-
-  app.collections.TweetList = TweetList;
-
-  return TweetList;
-})
+    return TweetList;
+  }
+);

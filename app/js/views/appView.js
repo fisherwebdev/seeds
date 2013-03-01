@@ -9,7 +9,7 @@ define(['config', 'backbone'], function () {
     },
 
     initialize: function() {
-      console.log('AppView!');
+      app.$stage = $("#seeds-stage"); // make the stage easily available to other views
     },
 
     authenticate: function (e) {
@@ -26,7 +26,7 @@ define(['config', 'backbone'], function () {
       // Note that the screen_name parameter serves two purposes:
       // 1. as a key for storing the redirect url
       // 2. forces the twitter OAuth to prepopulate the login screen with the username.
-      window.location = SEEDS_CONFIG.api.auth + "?screen_name=" + nicknameKey + "&url=" + url;
+      window.location = (SEEDS_CONFIG.api.auth + "?screen_name=" + nicknameKey + "&url=" + url);
     }
 
 

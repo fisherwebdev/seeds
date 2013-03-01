@@ -1,66 +1,51 @@
-define(['config', 'backbone'], function () {
+define(['backbone', 'collections/tweetList', 'views/tweetListView', 'views/createTweetView', 'views/navView'],
+  function (Backbone, TweetList, TweetListView, CreateTweetView, NavView) {
 
-  var Workspace = Backbone.Router.extend({
-    routes:{
-      '/': 'landing',
-      'timeline': 'timeline',
-      'timeline/:type': 'timeline',
-      'timeline/user/:nickname': 'timeline',
-      'me': 'user', // TODO: build for this
-      'user/:nickname': 'user'
-    },
 
-    initialize: function () {
-      console.log('Router!');
-    },
+    var Router = Backbone.Router.extend({
 
-    landing: function () {
-      // TODO: perhaps redirect here is user is logged in?
-    },
+      routes:{
+        'tweetlist': 'tweetlist',
+        'createtweet': 'createtweet'
+      },
 
-    timeline: function (type, nickname) {
-      this.ensureAppChrome();
+      tweetlist: function () {
+        this.ensureAppChrome();
 
-      if (type == "user") {
-        // TODO
-      }
-      else {
-        var type = type || 'home',
-          timelineViewName = type + "Timeline";
+        var tweetList = app.collections.tweetlist = app.collections.tweetlist || new TweetList,
+            tweetListView = app.views.tweetList;
 
-        if (!app.views[timelineViewName]) {
-          app.views[timelineViewName] = new app.views.TweetList(type);
-          app.views[timelineViewName].render();
+        if (!tweetListView) {
+          app.views.tweetList = new TweetListView({collection: tweetList});
         }
         else {
-          console.log("TODO: bring the app.views[timelineViewName] into view!")
+          tweetListView.bringToStage();
+        }
+      },
+
+      createtweet: function () {
+        this.ensureAppChrome();
+
+        var createTweetView = app.views.createTweet;
+
+        if (!createTweetView) {
+          app.views.createTweet = new CreateTweetView();
+        }
+        else {
+          createTweetView.bringToStage();
+        }
+      },
+
+      ensureAppChrome: function () {
+        if (!app.views.nav) {
+          $("#seeds-sign-in").remove();
+          app.views.nav = new NavView;
         }
       }
-    },
 
-    user: function (nickname) {
-      this.ensureAppChrome();
+    });
 
-      if (!app.views.users[nickname]) {
-        var user = new app.models.User({nickname: nickname});
-        app.models.users[nickname] = user;
-        app.views.users[nickname] = new app.views.User({model: user});
-      }
-      else {
-        console.log("TODO: bring the app.views.user[nickname] into view!")
-      }
-    },
 
-    ensureAppChrome: function () {
-      if (!app.views.nav) {
-        $("#seeds-sign-in").remove();
-        app.views.nav = new app.views.Nav;
-      }
-    }
-
-  });
-
-  app.SeedsRouter = Workspace;
-
-  return app.SeedsRouter;
-})
+    return Router;
+  }
+);

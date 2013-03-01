@@ -2,27 +2,17 @@ define(function () {
 
   window.app = window.app || {
     collections: {},
-    models: {
-      users: {}
-    },
-    views: {
-      users: {}
-    },
-    mainViewList: ["homeTimeline", "mentionsTimeline", "meTimeline", "me"]
+    models: {},
+    views: {}
   };
 
-  console.log(window.app);
-
   SEEDS_CONFIG = {
-
     api: {
-      base: "http://localhost:3000",
-      auth: "http://localhost:3000/auth/twitter"
+      base: "http://openseedsio-env-mxg8npxvtu.elasticbeanstalk.com",
+      auth: "http://openseedsio-env-mxg8npxvtu.elasticbeanstalk.com/auth/twitter"
     },
-    authRedirectPath: "#timeline" // No leading slash needed.  This evaluates as "[location of index.html]/timeline/home".
-
+    authRedirectPath: "#tweetlist" // No leading slash needed.  This becomes "[location of index.html]/#timeline".
   }
 
   return SEEDS_CONFIG;
-
 });

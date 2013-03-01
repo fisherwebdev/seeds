@@ -7,6 +7,11 @@ header {
     background: #000;
     color: #fff;
 }
+.core {
+    max-width: 38em;
+    margin: 0 auto;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: CartoGothicStdBold,arial;
 }
@@ -39,7 +44,7 @@ ul {
     font-size: 0.7em;
     padding: 0.3em;
     border-right: 1px solid #000;
-    width: 25%;
+    width: 50%;
     box-sizing: border-box;
     text-align: center;
     background: #eee;
@@ -48,15 +53,70 @@ ul {
     text-decoration: none;
 }
 
+/* slide flip animation
+ *
+ * from: http://desandro.github.com/3dtransforms/docs/card-flip.html
+ *
+ */
 #seeds-app {
-    max-width: 38em;
-    margin: 0 auto;
+    -webkit-perspective: 800px;
 }
+#seeds-stage {
+    width:100%;
+    height:100%;
+    -webkit-transform-style: preserve-3d;
+    -webkit-transition: -webkit-transform 1s;
+    -webkit-transform-origin: right center;
+}
+#seeds-stage.flipped {
+    -webkit-transform: translateX( -100% ) rotateY( -180deg );
+}
+.panel {
+    position:absolute;
+    -webkit-backface-visibility: hidden;
+    background: #ccc;
+    width:100%;
+}
+.panel.createtweet {
+    -webkit-transform: rotateY( 180deg );
+}
+
+
+
+
+.createtweet .frame {
+    padding: 1em;
+    background: #666;
+    overflow: hidden;
+}
+.createtweet textarea {
+    font-size: 1em;
+    width: 100%;
+    height: 5em;
+    margin-bottom: 1em;
+    box-sizing: border-box;
+}
+.createtweet button {
+    padding: 1em;
+    float:right;
+}
+.chars-left {
+    float: left;
+    color: #aaa;
+    font-style: italic;
+    font-size: 0.8em;
+}
+
+
+
+
+
 
 input[type=text], button {
     font-size:100%;
 }
 
+/*
 .info p {
     min-height: 1.2em;
 }
@@ -84,6 +144,8 @@ input[type=text], button {
     -webkit-transition-delay: 3s;
     transition-delay: 3s;
 }
+
+
 form {
     width: 100%;
     margin-bottom: 2em;
@@ -101,23 +163,9 @@ input[type=submit] {
     padding: 0.75em;
     border-radius: 0.5em;
 }
+*/
 
 
-.panel {
-    background: #ccc;
-    position:absolute;
-}
-.panel.transitioning {
-    z-index: 1;
-    -webkit-transition: -webkit-transform 0.8s
-}
-.panel.offscreen {
-    -webkit-transition: all 0s
-}
-.panel.active {
-    z-index: 0;
-    position:relative;
-}
 
 
 .tweetlist {

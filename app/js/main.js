@@ -10,26 +10,17 @@ require.config({
 require([
 
   'config',
-  'lib/polyfills',
-  'models/tweet',
-  'models/user',
-  'collections/tweetlist',
-  'views/app',
-  'views/panel',
-  'views/tweetlist',
-  'views/tweet',
-  'views/user',
-  'views/nav',
+  'views/appView',
   'routers/router'
 
-], function () {
+], function (config, AppView, Router) {
 
-  // the primary event bus
+  // use our namespace as the primary event bus
   _.extend(app, Backbone.Events);
 
   // start the app
-  app.views.seedsApp = app.views.seedsApp || new app.views.App;
-  app.seedsRouter = new app.SeedsRouter;
+  app.views.app = app.views.app || new AppView;
+  app.router = new Router;
 
   // Not using pushState due to maintaining total separation from server.
   // If we wanted to instead implement all of our routes on the server also, we could use pushState and avoid the #.

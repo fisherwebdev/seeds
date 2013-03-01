@@ -6,12 +6,13 @@ define(['config', 'backbone'], function () {
 
     id: "seeds-primary-nav",
 
+    className: "core",
+
     events: {
       "click li": "slidePanel"
     },
 
     initialize: function () {
-      console.log("Nav!")
       this.render();
     },
 
@@ -19,7 +20,7 @@ define(['config', 'backbone'], function () {
 
     render: function () {
       this.$el.html(this.template());
-      app.views.seedsApp.$el.prepend(this.el);
+      $('header').append(this.el);
       return this;
     },
 
