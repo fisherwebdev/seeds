@@ -53,6 +53,7 @@ ul {
     text-decoration: none;
 }
 
+
 /* slide flip animation
  *
  * from: http://desandro.github.com/3dtransforms/docs/card-flip.html
@@ -106,7 +107,13 @@ ul {
     font-style: italic;
     font-size: 0.8em;
 }
-
+.too-long .chars-left {
+    color: #800;
+}
+.too-long button {
+    background: #eee;
+    color: #ccc;
+}
 
 
 
