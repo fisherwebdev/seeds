@@ -4,46 +4,44 @@ define(['config', 'backbone', 'collections/tweetlist', 'views/tweetView'],
 
     var TweetListView = Backbone.View.extend({
 
-      tagName: "ul",
+      el: $(".tweetlist.panel"),
 
       className: "tweetlist panel",
 
       initialize: function () {
         this.render();
-        this.listenTo(this.collection, 'add', this.addModel);
-        this.listenTo(this.collection, 'reset', this.resetCollection);
+        this.listenTo(this.collection, 'add', this.handleAdd);
+        this.listenTo(this.collection, 'reset', this.handleReset);
       },
 
       render: function () {
         app.$stage.append(this.el);
-
-        // rotate app to show this view.  see styles.css.
-        $(app.views.app).removeClass('show-createtweet');
-
+        this.bringToStage();
         return this;
       },
 
-      addModel: function(tweet, $docFrag) {
+      appendModel: function(tweet, $docFrag) {
         var view = new TweetView({model: tweet});
-        $container = $docFrag || this.$el.find('ul');
-
+        $container = $docFrag || this.$el;
         $container.append(view.render().el);
       },
 
-      resetCollection: function() {
+      handleAdd: function (tweet) {
+        var view = new TweetView({model: tweet});
+        this.$el.prepend(view.render().el);
+      },
+
+      handleReset: function() {
         var $docFrag = $(document.createDocumentFragment());
         this.collection.each(function (tweet) {
-          this.addModel(tweet, $docFrag);
+          this.appendModel(tweet, $docFrag);
         }, this);
         this.$el.html($docFrag);
       },
 
-      updateCollection: function () {
-
-      },
-
       bringToStage: function () {
-        app.$stage.removeClass("flipped");
+        app.$stage.removeClass().addClass("tweetlist-position");
+        app.carousel.rotate(this.$el.data('carousel-index'));
       }
 
     });

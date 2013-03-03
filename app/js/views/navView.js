@@ -1,5 +1,6 @@
 define(['config', 'backbone'], function () {
 
+
   var NavView = Backbone.View.extend({
 
     tagName: "ul",
@@ -8,8 +9,10 @@ define(['config', 'backbone'], function () {
 
     className: "core",
 
-    events: {
-      "click li": "slidePanel"
+    events: function () {
+      var events = {};
+      events[SEEDS_CONFIG.pointer.up + " li"] = "navigate";
+      return events;
     },
 
     initialize: function () {
@@ -20,25 +23,17 @@ define(['config', 'backbone'], function () {
 
     render: function () {
       this.$el.html(this.template());
-      $('header').append(this.el);
+      $('header .core').append(this.el);
       return this;
     },
 
-    slidePanel: function (e) {
-      var $button = $(e.currentTarget),
-          data = {
-            view: $button.data('view')
-          }
-
-      app.trigger("slidePanel", data);
-
-      //console.log($button, arguments);
+    navigate: function (e) {
+      var view = $(e.currentTarget).data('view');
+      app.router.navigate(view, {trigger: true});
     }
 
   });
 
-  app.views.Nav = NavView;
 
   return NavView;
-
 });

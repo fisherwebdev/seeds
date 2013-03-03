@@ -1,45 +1,77 @@
-define(['backbone', 'collections/tweetList', 'views/tweetListView', 'views/createTweetView', 'views/navView'],
-  function (Backbone, TweetList, TweetListView, CreateTweetView, NavView) {
+define([
+    'backbone',
+    'collections/tweetList',
+    'models/currentUser',
+    'views/authView',
+    'views/tweetListView',
+    'views/createTweetView',
+    'views/navView'
+  ],
+  function (Backbone, TweetList, CurrentUser, AuthView, TweetListView, CreateTweetView, NavView) {
 
 
     var Router = Backbone.Router.extend({
 
       routes:{
+        '': 'auth',
         'tweetlist': 'tweetlist',
         'createtweet': 'createtweet'
       },
 
+      auth: function () {
+        this.bringViewToStage("authView", AuthView);
+      },
+
       tweetlist: function () {
-        this.ensureAppChrome();
+        this.ensureApp();
 
         var tweetList = app.collections.tweetlist = app.collections.tweetlist || new TweetList,
-            tweetListView = app.views.tweetList;
+            tweetListView = app.views.tweetList; // may be undefined
 
-        if (!tweetListView) {
-          app.views.tweetList = new TweetListView({collection: tweetList});
-        }
-        else {
-          tweetListView.bringToStage();
-        }
+        this.bringViewToStage("tweetList", TweetListView, {collection: tweetList})
       },
 
       createtweet: function () {
-        this.ensureAppChrome();
+        this.ensureApp();
 
-        var createTweetView = app.views.createTweet;
+        if (!app.collections.tweetlist) {
+          this.navigate('tweetlist', {trigger: true});
+          return;
+        }
 
-        if (!createTweetView) {
-          app.views.createTweet = new CreateTweetView();
-        }
-        else {
-          createTweetView.bringToStage();
-        }
+        this.bringViewToStage("createTweet", CreateTweetView);
       },
 
-      ensureAppChrome: function () {
+      ensureApp: function () {
+        this.ensureChrome();
+        this.ensureUser();
+      },
+
+      ensureChrome: function () {
         if (!app.views.nav) {
           $("#seeds-sign-in").remove();
           app.views.nav = new NavView;
+        }
+      },
+
+      ensureUser: function () {
+        if (!app.user) {
+          app.user = JSON.parse(localStorage.getItem('user'));
+          if (!app.user) {
+            new CurrentUser;
+          }
+        }
+      },
+
+      bringViewToStage: function (viewName, viewClass, options) {
+
+        console.log(arguments)
+
+        if (!app.views[viewName]) {
+          app.views[viewName] = new viewClass(options);
+        }
+        else {
+          app.views[viewName].bringToStage();
         }
       }
 

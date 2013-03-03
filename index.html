@@ -4,43 +4,49 @@
   <meta charset="utf-8">
 
   <title>Seeds</title>
-  <meta name="description" content="A Free and Open Twitter Client">
+  <meta name="description" content="A Simple, Free and Open Twitter Client">
   <meta name="author" content="Bill Fisher">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <link rel="stylesheet" href="app/css/style.css">
 
-  <!--[if lt IE 9]>
-  <script src="app/js/vendor/html5shiv.js"></script>
-  <![endif]-->
+  <script src="app/js/vendor/modernizr/modernizr.custom.18415.js"></script>
 </head>
 <body>
 
+
 <header>
-  <h1 class="core">Seeds</h1>
+  <div class="core">
+    <h1>Seeds</h1>
+  </div>
 </header>
-
-
 <section id="seeds-app" class=core>
   <div id="seeds-stage">
-
-  <div id="seeds-sign-in">
-    <p>Please sign in with your Twitter username:</p>
-    <input type="text" id="seeds-nickname-key" />
-    <button id="seeds-sign-in-button">Sign in!</button>
-  </div>
-
+    <div class="auth panel disabled" data-carousel-index="0"></div>
+    <ul class="tweetlist panel" data-carousel-index="1"></ul>
+    <div class="createtweet panel disabled" data-carousel-index="2"></div>
   </div>
 </section>
 
 
+<!-- backbone templates -->
+<script type="text/template" id="seeds-template-auth">
+  <p>Please sign in with your Twitter username:</p>
+  <input type="text" id="seeds-nickname-key" />
+  <div class="button" id="seeds-sign-in-button">Sign in!</div>
+</script>
 
 <script type="text/template" id="seeds-template-nav">
-  <li data-panel="tweetlist">
+  <li data-view="tweetlist" class="tweetlist-button">
+    <div class="first stripe"><span></span></div>
+    <div class="middle stripe"><span></span></div>
+    <div class="stripe"><span></span></div>
     <a href="#tweetlist">Tweetlist</a>
   </li>
-  <li data-panel="createtweet">
+
+  <li data-view="createtweet"  class="createtweet-button">
+    <div></div>
     <a href="#createtweet">New Tweet</a>
   </li>
 </script>
@@ -57,14 +63,12 @@
 </script>
 
 <script type="text/template" id="seeds-template-createtweet">
-  <div class="frame">
     <textarea />
-    <div class="chars-left"><span class="countdown">140</span><span>&nbsp;characters left</span></div>
-    <button>Tweet</button>
-  </div>
+    <div class="controls">
+      <div class="chars-left"><span class="countdown">140</span><span>&nbsp;characters left</span></div>
+      <div class="button">Tweet</div>
+    </div>
 </script>
-
-
 
 <script data-main="app/js/main.js" src="app/js/vendor/requirejs/require.js"></script>
 </body>
