@@ -10,26 +10,27 @@ define(['config', 'backbone', 'models/tweet'],
 
       events: {
         'click .button': 'postTweet',
-        'keyup textarea': 'validateCharCount'
+        'keyup textarea': 'validateCharCount',
+        'keydown': 'checkForEnterKey'
       },
 
       initialize: function () {
         this.render();
         this.$textarea = this.$el.find('textarea');
         this.$countdown = this.$el.find('.countdown');
-        this.$charsLeft = this.$el.find('.chars-left');
+        this.bringToFront();
       },
 
       render: function () {
         this.$el.append(this.template());
-        app.$stage.append(this.el);
-        this.bringToStage();
+        app.$carousel.append(this.el);
         return this;
       },
 
-      bringToStage: function () {
-        app.$stage.addClass('createtweet-position');
+      bringToFront: function () {
+        app.$carousel.addClass('createtweet-position');
         app.carousel.rotate(this.$el.data('carousel-index'));
+        this.$textarea.focus();
       },
 
       postTweet: function () {
@@ -47,14 +48,15 @@ define(['config', 'backbone', 'models/tweet'],
           },
           { // ajax options
             success: function () {
-              console.log("tweeted successfully", arguments);
+              this.$textarea.val("");
             },
             error: function () {
-              console.log("error while tweeting", arguments);
+              console.log("error while tweeting. todo: handle this.", arguments); // this is where we must handle the failure state!
             },
             xhrFields: {withCredentials: true} // for CORS with session data
           }
         );
+        app.router.navigate("tweetlist", {trigger: true});
       },
 
       validateCharCount: function (e) {
@@ -73,6 +75,13 @@ define(['config', 'backbone', 'models/tweet'],
 
       showCharCount: function (count) {
         this.$countdown.text(140 - count);
+      },
+
+      checkForEnterKey: function (e) {
+        if (e.which === 13) {
+          e.preventDefault();
+          this.postTweet();
+        }
       }
 
     });

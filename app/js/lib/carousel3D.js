@@ -1,15 +1,15 @@
 define(function () {
 
 
+  // modified slightly from: http://desandro.github.com/3dtransforms/docs/carousel.html
+
   var transformProp = Modernizr.prefixed('transform');
 
   function Carousel3D ( el ) {
     this.element = el;
-
     this.rotation = 0;
     this.panelCount = 3;
     this.theta = 120;
-
   }
 
   Carousel3D.prototype.modify = function() {
@@ -39,9 +39,6 @@ define(function () {
   Carousel3D.prototype.transform = function() {
     // push the carousel back in 3D space,
     // and rotate it
-
-    console.log(this.rotation);
-
     this.element.style[ transformProp ] = 'translateZ(-' + this.radius + 'px) rotateY(' + this.rotation + 'deg)';
   };
 
@@ -52,16 +49,10 @@ define(function () {
 
 
 
-
-
-
-
-
-
-  var init = function() {
-
-    var carousel = new Carousel3D( document.getElementById('seeds-stage') ),
-      navButtons = document.querySelectorAll('header li');
+//  var init = function() {
+//
+//    var carousel = new Carousel3D( document.getElementById('seeds-carousel') ),
+//      navButtons = document.querySelectorAll('header li');
     //,
 
 //      onNavButtonClick = function( event ){
@@ -71,7 +62,7 @@ define(function () {
 //      };
 
     // populate on startup
-    carousel.modify();
+    //carousel.modify();
 
 //    for (var i=0; i < 2; i++) {
 //      navButtons[i].addEventListener( 'click', onNavButtonClick, false);
@@ -81,7 +72,7 @@ define(function () {
 //      document.body.addClassName('ready');
 //    }, 0);
 
-  };
+  //};
 
 
 

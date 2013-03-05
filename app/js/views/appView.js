@@ -10,8 +10,8 @@ define(['config', 'backbone', 'lib/carousel3D'], function (config, Backbone, Car
     },
 
     initialize: function() {
-      var $stage = app.$stage = $("#seeds-stage"); // the panel containing element
-      var carousel = app.carousel = new Carousel3D( $stage.get(0) ); // the panel rotating object
+      var $carousel = app.$carousel = $("#seeds-carousel"); // the panel containing element
+      var carousel = app.carousel = new Carousel3D( $carousel.get(0) ); // the panel rotating object
       carousel.modify();
       this.listenTo(app, "session-error", this.handleSessionError)
     },

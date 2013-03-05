@@ -14,20 +14,19 @@ define(['config', 'backbone'],
       },
 
       initialize: function () {
-        console.log('auth view')
         this.render();
         this.$textfield = this.$el.find('input[type=text]');
+        this.bringToFront();
       },
 
       render: function () {
         this.$el.append(this.template());
-        app.$stage.append(this.el);
-        this.bringToStage();
+        app.$carousel.append(this.el);
         return this;
       },
 
-      bringToStage: function () {
-        app.$stage.removeClass().addClass('auth-position');
+      bringToFront: function () {
+        app.$carousel.removeClass().addClass('auth-position');
         app.carousel.rotate(this.$el.data('carousel-index'));
       },
 

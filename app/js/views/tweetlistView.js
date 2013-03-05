@@ -12,11 +12,11 @@ define(['config', 'backbone', 'collections/tweetlist', 'views/tweetView'],
         this.render();
         this.listenTo(this.collection, 'add', this.handleAdd);
         this.listenTo(this.collection, 'reset', this.handleReset);
+        this.bringToFront();
       },
 
       render: function () {
-        app.$stage.append(this.el);
-        this.bringToStage();
+        app.$carousel.append(this.el);
         return this;
       },
 
@@ -39,8 +39,8 @@ define(['config', 'backbone', 'collections/tweetlist', 'views/tweetView'],
         this.$el.html($docFrag);
       },
 
-      bringToStage: function () {
-        app.$stage.removeClass().addClass("tweetlist-position");
+      bringToFront: function () {
+        app.$carousel.removeClass().addClass("tweetlist-position");
         app.carousel.rotate(this.$el.data('carousel-index'));
       }
 

@@ -1,0 +1,70 @@
+CACHE MANIFEST
+
+# generated with ManifestR and then modified by hand.  get ManifestR here: http://westciv.com/tools/manifestR/
+
+# cache busting version number
+#version 1.16 3-4-2013
+
+
+
+# using the CACHE section heading is option if it is first but if you add it below one of the others its required
+# you can also use this multiple times in this file
+# note you can't use a wildcard like app/js/*
+
+CACHE:
+
+#images
+http://a0.twimg.com/sticky/default_profile_images/default_profile_3_normal.png
+
+#internal HTML documents
+# http://seeds/
+
+#style sheets
+http://seeds/app/css/style.css
+
+#style sheet images
+data:image/gif;base64,R0lGODlhMgAyAKIAAP///wEBAZeUlNDOzmZjYri2tjU0M+Pi4SH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4wLWMwNjAgNjEuMTM0Nzc3LCAyMDEwLzAyLzEyLTE3OjMyOjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ4bXAuZGlkOkY4N0YxMTc0MDcyMDY4MTE4QTZEQzhDRjgyQTYwNTcyIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkUxOUU1OENDN0I5OTExRTI5NDg1ODFBNEY3MjM3NkFDIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkUxOUU1OENCN0I5OTExRTI5NDg1ODFBNEY3MjM3NkFDIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIElsbHVzdHJhdG9yIENTNSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkY4N0YxMTc0MDcyMDY4MTE4QTZEQzhDRjgyQTYwNTcyIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkY4N0YxMTc0MDcyMDY4MTE4QTZEQzhDRjgyQTYwNTcyIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAAAAAAAsAAAAADIAMgAAA/8Yutz+cBlDRBnnlMg7pMUBjCQgeGhnCGLpEmncrG49GnJODHY95DJBz3YCegyF4WhQEBAIOCPH0CodeCTmMyr9VEmFZK/YdRiI4h63LPkCDhblhs2gugY7JQBGX6SXeUoHfQtCJQWBSnx9Z4cEbmqEdmCJSmR0hiMFBlh6B2tljUuceiSLdGkDSKVLhAEEJJ9/eqBlaTSse66iT7kAc4RiUL6qu5qTGmGdJcWusKqdVwITEwQhAM2uSbg+UAoUtXR7sHqbrjPTkD7hjKtKeOcP5DZw7OeiI1eI9vEBA6rU+PVTAEvguQoCEiocodDJQAbLatgB9jCiC1IUB1obwgNb0cM6PVoYZDSm4EMKCmdlSdIkobdgvhKmydgFXykY+EYe8aVrEgCdKngW6QSUwzxWczKd6nK01I8ASvtkYvV03qUuKmm9AtNHnSIKWfrsyEC2rNkM/zBcWWokAQA7
+
+#javascript files
+http://seeds/app/js/vendor/modernizr/modernizr.custom.18415.js
+http://seeds/app/js/main.js
+http://seeds/app/js/config.js
+http://seeds/app/js/views/appView.js
+http://seeds/app/js/routers/router.js
+http://seeds/app/js/vendor/backbone-amd/backbone.js
+http://seeds/app/js/lib/carousel3D.js
+http://seeds/app/js/collections/tweetList.js
+http://seeds/app/js/models/currentUser.js
+http://seeds/app/js/views/authView.js
+http://seeds/app/js/views/tweetListView.js
+http://seeds/app/js/views/createTweetView.js
+http://seeds/app/js/views/navView.js
+http://seeds/app/js/models/tweet.js
+http://seeds/app/js/vendor/lodash/lodash.js
+http://seeds/app/js/vendor/jquery/jquery.js
+http://seeds/app/js/collections/tweetlist.js
+http://seeds/app/js/views/tweetView.js
+http://seeds/app/js/vendor/requirejs/require.js
+
+
+
+# the NETWORK section is for external resources that should never be cached and never be available offline.
+# in this section you can use the * wildcard.
+
+NETWORK:
+*
+
+
+
+# you could have a multipage app where you wanted show show a generic offline page for any page not cached.
+# the FALLBACK section will show where to load these resources instead.
+
+# FALLBACK:
+# / /offline.html
+
+
+# "prefer-online" is the only option in the SETTINGS, which will not use the cached resources if the user is online.
+
+# SETTINGS:
+# prefer-online
+

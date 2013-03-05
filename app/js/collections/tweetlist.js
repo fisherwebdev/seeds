@@ -12,9 +12,6 @@ define(['config', 'backbone', 'models/tweet'],
 
       initialize: function () {
         this.fetch({
-          success: function () {
-            console.log("tweetlist success", arguments);
-          },
           error: function (collection, jqxhr, options) {
             app.trigger("ajax-error", jqxhr.status, JSON.parse(jqxhr.responseText));
           },

@@ -19,7 +19,7 @@ define([
       },
 
       auth: function () {
-        this.bringViewToStage("authView", AuthView);
+        this.bringViewToFront("authView", AuthView);
       },
 
       tweetlist: function () {
@@ -28,7 +28,7 @@ define([
         var tweetList = app.collections.tweetlist = app.collections.tweetlist || new TweetList,
             tweetListView = app.views.tweetList; // may be undefined
 
-        this.bringViewToStage("tweetList", TweetListView, {collection: tweetList})
+        this.bringViewToFront("tweetList", TweetListView, {collection: tweetList})
       },
 
       createtweet: function () {
@@ -39,7 +39,7 @@ define([
           return;
         }
 
-        this.bringViewToStage("createTweet", CreateTweetView);
+        this.bringViewToFront("createTweet", CreateTweetView);
       },
 
       ensureApp: function () {
@@ -63,15 +63,12 @@ define([
         }
       },
 
-      bringViewToStage: function (viewName, viewClass, options) {
-
-        console.log(arguments)
-
+      bringViewToFront: function (viewName, viewClass, options) {
         if (!app.views[viewName]) {
           app.views[viewName] = new viewClass(options);
         }
         else {
-          app.views[viewName].bringToStage();
+          app.views[viewName].bringToFront();
         }
       }
 

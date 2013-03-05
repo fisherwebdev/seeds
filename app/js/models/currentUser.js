@@ -8,7 +8,6 @@ define(['config', 'backbone'], function () {
     },
 
     initialize: function () {
-      console.log('CurrentUser Model!', this);
       this.fetch({
         xhrFields: {withCredentials: true}, // for CORS with session data
         success: this.storeDataLocally,
