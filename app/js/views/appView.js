@@ -6,8 +6,8 @@ define(['config', 'backbone', 'lib/carousel3D'], function (config, Backbone, Car
     el: '#seeds-app',
 
     initialize: function() {
-      this.setUpCarousel();
-      this.listenTo(app, "ajax-error", this.handleAjaxError);
+      this.listenTo(app, "ajax-error", this.handleAjaxError)
+          .setUpCarousel();
     },
 
     setUpCarousel: function () {

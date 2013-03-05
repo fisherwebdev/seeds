@@ -23,22 +23,20 @@ define([
       },
 
       tweetlist: function () {
-        this.ensureApp();
-
-        var tweetList = app.collections.tweetlist = app.collections.tweetlist || new TweetList;
-        this.bringViewToFront("tweetList", TweetListView, {collection: tweetList})
+        this.tweetCollectionRoute("tweetList", TweetListView);
       },
 
       createtweet: function () {
+        this.tweetCollectionRoute("createTweet", CreateTweetView);
+      },
+
+
+      // supporting methods
+
+      tweetCollectionRoute: function (viewName, viewClass) {
         this.ensureApp();
-
-        // if the user has started here, redirect to the tweetlist view
-        if (!app.collections.tweetlist) {
-          this.navigate('tweetlist', {trigger: true});
-          return;
-        }
-
-        this.bringViewToFront("createTweet", CreateTweetView);
+        var tweetList = app.collections.tweetlist = app.collections.tweetlist || new TweetList;
+        this.bringViewToFront(viewName, viewClass, {collection: tweetList});
       },
 
       ensureApp: function () {

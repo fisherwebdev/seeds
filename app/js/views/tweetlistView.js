@@ -1,21 +1,24 @@
-define(['config', 'backbone', 'collections/tweetlist', 'views/tweetView'],
-  function (config, Backbone, TweetList, TweetView) {
+define(['config', 'backbone', 'collections/tweetlist', 'views/panelView', 'views/tweetView'],
+  function (config, Backbone, TweetList, PanelView, TweetView) {
 
 
-    var TweetListView = Backbone.View.extend({
+    var TweetListView = PanelView.extend({ // PanelView provides the initialize, render and bringToFront methods
 
       el: $(".tweetlist.panel"),
 
       className: "tweetlist panel",
 
-      initialize: function () {
-        this.render();
-        this.listenTo(this.collection, 'add', this.handleAdd);
-        this.listenTo(this.collection, 'reset', this.handleReset);
-        this.bringToFront();
+      initialize: function () { // overriding PanelView
+        this.render()
+            .bringToFront()
+            .listenTo(this.collection, 'add', this.handleAdd)
+            .listenTo(this.collection, 'reset', this.handleReset);
+        if (!this.$el.children().length) {
+          this.handleReset();
+        }
       },
 
-      render: function () {
+      render: function () { // overriding PanelView
         app.$carousel.append(this.el);
         return this;
       },
@@ -32,16 +35,12 @@ define(['config', 'backbone', 'collections/tweetlist', 'views/tweetView'],
       },
 
       handleReset: function() {
+        console.log(this.collection);
         var $docFrag = $(document.createDocumentFragment());
         this.collection.each(function (tweet) {
           this.appendModel(tweet, $docFrag);
         }, this);
         this.$el.html($docFrag);
-      },
-
-      bringToFront: function () {
-        app.$carousel.removeClass().addClass("tweetlist-position");
-        app.carousel.rotate(this.$el.data('carousel-index'));
       }
 
     });

@@ -1,8 +1,8 @@
-define(['config', 'backbone'],
-  function (config, Backbone) {
+define(['config', 'backbone', 'views/panelView'],
+  function (config, Backbone, PanelView) {
 
 
-    var AuthView = Backbone.View.extend({
+    var AuthView = PanelView.extend({ // PanelView provides the initialize, render and bringToFront methods
 
       el: $('.auth.panel'),
 
@@ -13,28 +13,17 @@ define(['config', 'backbone'],
         'keyup input': 'validateCharCount'
       },
 
-      initialize: function () {
+      initialize: function () { // overriding PanelView
         this.render();
+        this.$textfield = this.$el.find('input[type=text]').focus();
         this.bringToFront();
-        this.$textfield = this.$el.find('input[type=text]');
-      },
-
-      render: function () {
-        this.$el.append(this.template());
-        app.$carousel.append(this.el);
-        return this;
-      },
-
-      bringToFront: function () {
-        app.$carousel.removeClass().addClass('auth-position');
-        app.carousel.rotate(this.$el.data('carousel-index'));
       },
 
       authenticate: function () {
         if (this.$el.hasClass('disabled')) return; // Do nothing if the text field has nothing in it.
 
         // Build the encoded redirect url to pass to the server out of the current location and the configuration file
-        var nicknameKey = encodeURIComponent($('#seeds-nickname-key').val()),
+        var nicknameKey = encodeURIComponent(this.$textfield.val()),
           url =  window.location.href;
         if (url[url.length - 1] !== "/") url += "/";
         url += SEEDS_CONFIG.authRedirectPath;

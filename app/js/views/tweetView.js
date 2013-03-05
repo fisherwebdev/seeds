@@ -9,8 +9,8 @@ define(['config', 'backbone'],
       className: "tweet",
 
       initialize: function () {
-        this.listenTo(this.model, "change", this.render);
-        this.listenTo(this.model.collection, "remove", this.handleRemove);
+        this.listenTo(this.model, "change", this.render)
+            .listenTo(this.model.collection, "remove", this.handleRemove);
       },
 
       template: _.template($("#seeds-template-tweet").html()),

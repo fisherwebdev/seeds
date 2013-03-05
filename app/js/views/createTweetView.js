@@ -1,8 +1,8 @@
-define(['config', 'backbone', 'models/tweet'],
-  function (config, Backbone, Tweet) {
+define(['config', 'backbone', 'views/panelView'],
+  function (config, Backbone, PanelView) {
 
 
-    var CreateTweetView = Backbone.View.extend({
+    var CreateTweetView = PanelView.extend({ // PanelView provides the initialize, render and bringToFront methods
 
       el: $('.createtweet.panel'),
 
@@ -14,31 +14,25 @@ define(['config', 'backbone', 'models/tweet'],
         'keydown': 'postOnEnterKey'
       },
 
-      initialize: function () {
-        this.render();
+      initialize: function () { // overriding PanelView
+        this.render()
+            .listenTo(app, 'tweet-success', this.clearText);
         this.$textarea = this.$el.find('textarea');
         this.$countdown = this.$el.find('.countdown');
-        this.bringToFront();
-        this.listenTo(app, 'tweet-success', this.clearText);
+        this.bringToFront()
       },
 
-      render: function () {
-        this.$el.append(this.template());
-        app.$carousel.append(this.el);
+      bringToFront: function () { // overriding PanelView to provide focus
+        app.carousel.rotate(this.$el.data('carousel-index'));
+        this.$textarea.focus();
         return this;
       },
 
-      bringToFront: function () {
-        app.$carousel.addClass('createtweet-position'); // TODO: get rid of this stuff
-        app.carousel.rotate(this.$el.data('carousel-index'));
-        this.$textarea.focus();
-      },
-
       postTweet: function () {
-        if (this.$el.hasClass('disabled')) return;                    // Do nothing if the character count is wrong.
-        Backbone.emulateJSON = true;                                  // CORS likes it to be form data, not json.
-        app.collections.tweetlist.createTweet(this.$textarea.val());  // tweetlist collection does the ajax and data work for creating the tweet.
-        app.router.navigate("tweetlist", {trigger: true});            // We're done here so switch views.
+        if (this.$el.hasClass('disabled')) return;          // Do nothing if the character count is wrong.
+        Backbone.emulateJSON = true;                        // CORS likes it to be form data, not json.
+        this.collection.createTweet(this.$textarea.val());  // tweetlist collection does the ajax and data work for creating the tweet.
+        app.router.navigate("tweetlist", {trigger: true});  // We're done here so switch views.
       },
 
       validateCharCount: function (e) {

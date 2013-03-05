@@ -45,14 +45,10 @@ define(['config', 'backbone', 'models/tweet'],
       },
 
       handleTweetError: function (model, jqxhr, options) {
-
-        console.log(model);
-
         this.remove(model); // the Tweet view is listening for this removal and will remove itself from the DOM.
 
-        // give the user another chance.  note that we also have not cleared the CreateTweet textarea yet.
         if (jqxhr.status !== 403) {
-          var tryAgain = confirm("That last tweet didn't go through.  Try Again?");
+          var tryAgain = confirm("That last tweet didn't go through.  Try Again?"); // give the user another chance.
           if (tryAgain) {
             this.createTweet(model.attributes.text);
           }
