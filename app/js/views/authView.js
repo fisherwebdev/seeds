@@ -15,8 +15,8 @@ define(['config', 'backbone'],
 
       initialize: function () {
         this.render();
-        this.$textfield = this.$el.find('input[type=text]');
         this.bringToFront();
+        this.$textfield = this.$el.find('input[type=text]');
       },
 
       render: function () {
@@ -31,7 +31,7 @@ define(['config', 'backbone'],
       },
 
       authenticate: function () {
-        if (this.$el.hasClass('disabled')) return;
+        if (this.$el.hasClass('disabled')) return; // Do nothing if the text field has nothing in it.
 
         // Build the encoded redirect url to pass to the server out of the current location and the configuration file
         var nicknameKey = encodeURIComponent($('#seeds-nickname-key').val()),

@@ -10,6 +10,7 @@ define(['config', 'backbone'],
 
       initialize: function () {
         this.listenTo(this.model, "change", this.render);
+        this.listenTo(this.model.collection, "remove", this.handleRemove);
       },
 
       template: _.template($("#seeds-template-tweet").html()),
@@ -17,6 +18,12 @@ define(['config', 'backbone'],
       render: function () {
         this.$el.html(this.template(this.model.attributes));
         return this;
+      },
+
+      handleRemove: function (model)  {
+        if (model === this.model) {
+          this.remove();
+        }
       }
 
     });

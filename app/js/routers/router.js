@@ -25,15 +25,14 @@ define([
       tweetlist: function () {
         this.ensureApp();
 
-        var tweetList = app.collections.tweetlist = app.collections.tweetlist || new TweetList,
-            tweetListView = app.views.tweetList; // may be undefined
-
+        var tweetList = app.collections.tweetlist = app.collections.tweetlist || new TweetList;
         this.bringViewToFront("tweetList", TweetListView, {collection: tweetList})
       },
 
       createtweet: function () {
         this.ensureApp();
 
+        // if the user has started here, redirect to the tweetlist view
         if (!app.collections.tweetlist) {
           this.navigate('tweetlist', {trigger: true});
           return;

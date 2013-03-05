@@ -22,8 +22,9 @@ define(['config', 'backbone'], function () {
       app.user = response;
     },
 
-    handleAjaxError: function () {
-      console.log(arguments);
+    handleAjaxError: function (collection, jqxhr, options) {
+      app.trigger("ajax-error", jqxhr)
+      console.log("current user fetch error", arguments);
     }
 
   });

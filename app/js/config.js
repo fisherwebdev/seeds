@@ -38,8 +38,8 @@ define(function () {
 
   SEEDS_CONFIG = {
     api: {
-      base: "http://localhost:3000", //"http://openseedsio-env-mxg8npxvtu.elasticbeanstalk.com",
-      auth: "http://localhost:3000/auth/twitter" //"http://openseedsio-env-mxg8npxvtu.elasticbeanstalk.com/auth/twitter"
+      base: "http://openseeds.io", //"http://openseedsio-env-mxg8npxvtu.elasticbeanstalk.com",
+      auth: "http://openseeds.io/auth/twitter" //"http://openseedsio-env-mxg8npxvtu.elasticbeanstalk.com/auth/twitter"
     },
     authRedirectPath: "#tweetlist", // No leading slash needed.  This becomes "[location of index.html]/#timeline".
     pointer: pointer

@@ -11,7 +11,7 @@ define(['config', 'backbone', 'models/tweet'],
       events: {
         'click .button': 'postTweet',
         'keyup textarea': 'validateCharCount',
-        'keydown': 'checkForEnterKey'
+        'keydown': 'postOnEnterKey'
       },
 
       initialize: function () {
@@ -19,6 +19,7 @@ define(['config', 'backbone', 'models/tweet'],
         this.$textarea = this.$el.find('textarea');
         this.$countdown = this.$el.find('.countdown');
         this.bringToFront();
+        this.listenTo(app, 'tweet-success', this.clearText);
       },
 
       render: function () {
@@ -28,35 +29,16 @@ define(['config', 'backbone', 'models/tweet'],
       },
 
       bringToFront: function () {
-        app.$carousel.addClass('createtweet-position');
+        app.$carousel.addClass('createtweet-position'); // TODO: get rid of this stuff
         app.carousel.rotate(this.$el.data('carousel-index'));
         this.$textarea.focus();
       },
 
       postTweet: function () {
-        if (this.$el.hasClass('disabled')) return;
-
-        Backbone.emulateJSON = true;
-        app.collections.tweetlist.create(
-          { // attributes
-              "text": this.$textarea.val(),
-              "user": {
-                "profile_image_url": app.user.profile_image_url,
-                "name": app.user.name,
-                "screen_name": app.user.screen_name
-              }
-          },
-          { // ajax options
-            success: function () {
-              this.$textarea.val("");
-            },
-            error: function () {
-              console.log("error while tweeting. todo: handle this.", arguments); // this is where we must handle the failure state!
-            },
-            xhrFields: {withCredentials: true} // for CORS with session data
-          }
-        );
-        app.router.navigate("tweetlist", {trigger: true});
+        if (this.$el.hasClass('disabled')) return;                    // Do nothing if the character count is wrong.
+        Backbone.emulateJSON = true;                                  // CORS likes it to be form data, not json.
+        app.collections.tweetlist.createTweet(this.$textarea.val());  // tweetlist collection does the ajax and data work for creating the tweet.
+        app.router.navigate("tweetlist", {trigger: true});            // We're done here so switch views.
       },
 
       validateCharCount: function (e) {
@@ -77,11 +59,16 @@ define(['config', 'backbone', 'models/tweet'],
         this.$countdown.text(140 - count);
       },
 
-      checkForEnterKey: function (e) {
+      postOnEnterKey: function (e) {
         if (e.which === 13) {
           e.preventDefault();
           this.postTweet();
         }
+      },
+
+      clearText: function () {
+        this.$textarea.val("");
+        this.showCharCount(0);
       }
 
     });
