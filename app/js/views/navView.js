@@ -11,7 +11,7 @@ define(['config', 'backbone'], function () {
 
     events: function () {
       var events = {};
-      events[SEEDS_CONFIG.pointer.up + ' a'] = 'navigate'; // e.g. 'touchend a' = 'navigate'
+      events[SEEDS_CONFIG.pointer.up + ' li'] = 'navigate'; // e.g. 'touchend a' = 'navigate'
       return events;
     },
 
@@ -28,7 +28,6 @@ define(['config', 'backbone'], function () {
     },
 
     navigate: function (e) {
-      e.preventDefault();
       var view = $(e.currentTarget).data('view');
       app.router.navigate(view, {trigger: true});
     }
