@@ -1,17 +1,11 @@
 define(function () {
 
-  window.app = window.app || {
-    collections: {},
-    models: {},
-    views: {}
-  };
-
   var pointer = {
     down: "mousedown",
-    up: "mouseup",
+    up:   "mouseup",
     move: "mousemove"
-  }
-  if ("touchstart" in window) {
+  };
+  if (Modernizr.touch) { // from Modernizr
     // http://www.w3.org/TR/touch-events/
     pointer = {
       down: "touchstart",
@@ -36,14 +30,18 @@ define(function () {
     }
   }
 
+
+
   SEEDS_CONFIG = {
     api: {
-      base: "http://openseeds.io", //"http://openseedsio-env-mxg8npxvtu.elasticbeanstalk.com",
-      auth: "http://openseeds.io/auth/twitter" //"http://openseedsio-env-mxg8npxvtu.elasticbeanstalk.com/auth/twitter"
+      base: "http://openseeds.io",
+      auth: "http://openseeds.io/auth/twitter"
     },
     authRedirectPath: "#tweetlist", // No leading slash needed.  This becomes "[location of index.html]/#timeline".
     pointer: pointer
   }
+
+
 
   return SEEDS_CONFIG;
 });

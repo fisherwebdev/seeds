@@ -11,14 +11,16 @@ define(['config', 'backbone', 'models/tweet'],
       },
 
       initialize: function () {
+        var handleError = _.bind(this.handleInitError, this);
         this.fetch({
-          error: this.handleInitError,
+          success: this.setLocally,
+          error: handleError,
           xhrFields: {withCredentials: true} // for CORS with session data
         });
       },
 
       createTweet: function (text) {
-        var handleTweetError = _.bind(this.handleTweetError, this),
+        var handleError = _.bind(this.handleTweetError, this),
             attributes = {
               "text": text,
               "user": {
@@ -27,20 +29,42 @@ define(['config', 'backbone', 'models/tweet'],
                 "screen_name": app.user.screen_name
               }
             },
-            ajaxOptions = {
+            options = {
               success: this.handleTweetSuccess,
-              error: handleTweetError,
+              error: handleError,
               xhrFields: {withCredentials: true} // for CORS with session data
             }
-        this.create(attributes, ajaxOptions);
+        this.create(attributes, options);
+      },
+
+      updateTweets: function () {
+        var handleError = _.bind(this.handleUpdateError, this);
+        this.update({
+          remove: false,
+          success: this.setLocally,
+          error: handleError,
+          xhrFields: {withCredentials: true} // for CORS with session data
+        });
+      },
+
+      getLocally: function () {
+        return JSON.parse(localStorage.getItem('tweetlist'));
+      },
+
+      setLocally: function (collection, response, jqxhr) {
+        localStorage.setItem('tweetlist', JSON.stringify(collection));
       },
 
       handleInitError: function (collection, jqxhr, options) {
+        var locals = this.getLocally();
+        console.log("tweetlist ajax error.  got locals", locals);
+        if (locals) {
+          this.add(locals); // initialize with the stored tweets instead
+        }
         app.trigger("ajax-error", jqxhr);
-        console.log("tweetlist init error. maybe get stuff from local storage at this point?")
       },
 
-      handleTweetSuccess: function () {
+      handleTweetSuccess: function (model, response, jqxhr) {
         app.trigger("tweet-success");  // CreateTweetView is listening for this so it can clear the text.
       },
 
@@ -55,6 +79,10 @@ define(['config', 'backbone', 'models/tweet'],
         }
 
         app.trigger("ajax-error", jqxhr); // handle the 403 error or perhaps others.  see AppView.
+      },
+
+      handleUpdateError: function (collection, jqxhr, options) {
+        app.trigger("ajax-error", jqxhr);
       }
 
     });

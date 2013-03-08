@@ -15,7 +15,14 @@ require([
 
 ], function (config, AppView, Router) {
 
-  // use our namespace as the primary event bus
+  // the namespace where we will store references to parts of the app
+  window.app = window.app || {
+    collections: {},
+    models: {},
+    views: {}
+  };
+
+  // use our namespace as the application event bus
   _.extend(app, Backbone.Events);
 
   // start the app

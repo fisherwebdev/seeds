@@ -38,7 +38,7 @@ ul {
  * navigation
  *
  */
-#seeds-primary-nav {
+#seeds-nav {
     float: right;
     overflow: hidden;
     border-left: 1px solid #000;
@@ -58,6 +58,11 @@ header li {
 }
 header li a {
     display: none;
+}
+header li a:active {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -moz-tap-highlight-color: rgba(0,0,0,0);
+    tap-highlight-color: rgba(0,0,0,0);
 }
 .tweetlist-button {
     background:#000;

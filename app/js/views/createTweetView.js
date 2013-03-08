@@ -24,7 +24,7 @@ define(['config', 'backbone', 'views/panelView'],
 
       bringToFront: function () { // overriding PanelView to provide focus
         app.carousel.rotate(this.$el.data('carousel-index'));
-        this.$textarea.focus();
+        // this.$textarea.focus(); // giving me trouble with the animation
         return this;
       },
 

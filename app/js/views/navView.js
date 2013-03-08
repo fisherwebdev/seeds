@@ -3,15 +3,15 @@ define(['config', 'backbone'], function () {
 
   var NavView = Backbone.View.extend({
 
-    tagName: "ul",
+    tagName: 'ul',
 
-    id: "seeds-primary-nav",
+    id: 'seeds-nav',
 
-    className: "core",
+    className: 'core',
 
     events: function () {
       var events = {};
-      events[SEEDS_CONFIG.pointer.up + " li"] = "navigate";
+      events[SEEDS_CONFIG.pointer.up + ' a'] = 'navigate'; // e.g. 'touchend a' = 'navigate'
       return events;
     },
 
@@ -28,6 +28,7 @@ define(['config', 'backbone'], function () {
     },
 
     navigate: function (e) {
+      e.preventDefault();
       var view = $(e.currentTarget).data('view');
       app.router.navigate(view, {trigger: true});
     }
