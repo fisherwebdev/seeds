@@ -13,9 +13,7 @@ define(function () {
   }
 
   Carousel3D.prototype.modify = function() {
-
     var panel, angle, i;
-
     this.panelSize = this.element.offsetWidth;
 
     // do some trig to figure out how big the carousel
@@ -47,33 +45,11 @@ define(function () {
     this.transform();
   };
 
-
-
-//  var init = function() {
-//
-//    var carousel = new Carousel3D( document.getElementById('seeds-carousel') ),
-//      navButtons = document.querySelectorAll('header li');
-    //,
-
-//      onNavButtonClick = function( event ){
-//        var increment = parseInt( event.target.getAttribute('data-increment'), 10 );
-//        carousel.rotation += carousel.theta * increment * -1;
-//        carousel.transform();
-//      };
-
-    // populate on startup
-    //carousel.modify();
-
-//    for (var i=0; i < 2; i++) {
-//      navButtons[i].addEventListener( 'click', onNavButtonClick, false);
-//    }
-
-//    setTimeout( function(){
-//      document.body.addClassName('ready');
-//    }, 0);
-
-  //};
-
+  Carousel3D.prototype.ready = function () {
+    setTimeout(function () {  // using a setTimeout here defers the execution enough to allow the rendering to happen first
+      document.body.className = 'ready ' + document.body.className;
+    }, 0);
+  }
 
 
   return Carousel3D;

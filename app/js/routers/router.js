@@ -28,6 +28,7 @@ define([
 
       createtweet: function () {
         this.tweetCollectionRoute("createTweet", CreateTweetView);
+
       },
 
 

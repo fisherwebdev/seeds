@@ -14,6 +14,7 @@ define(['config', 'backbone', 'lib/carousel3D'], function (config, Backbone, Car
       var $carousel = app.$carousel = $("#seeds-carousel"); // the panel containing element
       var carousel = app.carousel = new Carousel3D( $carousel.get(0) ); // the panel rotating object
       carousel.modify(); // setup
+      carousel.ready();
     },
 
     handleAjaxError: function (jqxhr) {
