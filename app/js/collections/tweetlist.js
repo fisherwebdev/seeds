@@ -11,17 +11,15 @@ define(['config', 'backbone', 'models/tweet'],
       },
 
       initialize: function () {
-        var handleError = _.bind(this.handleInitError, this);
         this.fetch({
           success: this.setLocally,
-          error: handleError,
+          error: _.bind(this.handleInitError, this),
           xhrFields: {withCredentials: true} // for CORS with session data
         });
       },
 
       createTweet: function (text) {
-        var handleError = _.bind(this.handleTweetError, this),
-            attributes = {
+        var attributes = {
               "text": text,
               "user": {
                 "profile_image_url": app.user.profile_image_url,
@@ -31,18 +29,17 @@ define(['config', 'backbone', 'models/tweet'],
             },
             options = {
               success: this.handleTweetSuccess,
-              error: handleError,
+              error: _.bind(this.handleTweetError, this),
               xhrFields: {withCredentials: true} // for CORS with session data
-            }
+            };
         this.create(attributes, options);
       },
 
       updateTweets: function () {
-        var handleError = _.bind(this.handleUpdateError, this);
         this.update({
           remove: false,
           success: this.setLocally,
-          error: handleError,
+          error: _.bind(this.handleUpdateError, this),
           xhrFields: {withCredentials: true} // for CORS with session data
         });
       },
@@ -57,7 +54,6 @@ define(['config', 'backbone', 'models/tweet'],
 
       handleInitError: function (collection, jqxhr, options) {
         var locals = this.getLocally();
-        console.log("tweetlist ajax error.  got locals", locals);
         if (locals) {
           this.add(locals); // initialize with the stored tweets instead
         }
@@ -74,7 +70,7 @@ define(['config', 'backbone', 'models/tweet'],
         if (jqxhr.status !== 403) {
           var tryAgain = confirm("That last tweet didn't go through.  Try Again?"); // give the user another chance.
           if (tryAgain) {
-            this.createTweet(model.attributes.text);
+            this.createTweet(model.get('text'));
           }
         }
 

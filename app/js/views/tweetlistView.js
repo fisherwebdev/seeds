@@ -16,7 +16,6 @@ define(['config', 'backbone', 'collections/tweetlist', 'views/panelView', 'views
         if (!this.$el.children().length) {
           this.handleReset();
         }
-        $(window).scroll(_.bind(this.handleScroll, this))
       },
 
       render: function () { // overriding PanelView
@@ -24,7 +23,7 @@ define(['config', 'backbone', 'collections/tweetlist', 'views/panelView', 'views
         return this;
       },
 
-      appendModel: function(tweet, $docFrag) {
+      appendModel: function(tweet, $docFrag) {  // $docFrag is optional
         var view = new TweetView({model: tweet});
         $container = $docFrag || this.$el;
         $container.append(view.render().el);

@@ -22,7 +22,8 @@ define(['config', 'backbone'], function () {
     template: _.template($("#seeds-template-nav").html()),
 
     render: function () {
-      this.$el.html(this.template());
+      this.$el.append(this.template());
+      this.attemptSvg();
       $('header .core').append(this.el);
       return this;
     },
@@ -30,6 +31,12 @@ define(['config', 'backbone'], function () {
     navigate: function (e) {
       var view = $(e.currentTarget).data('view');
       app.router.navigate(view, {trigger: true});
+    },
+
+    attemptSvg: function ($docFrag) {
+      if ($('html').hasClass('svg')) {
+        this.$el.find('div').css('backgroundImage', 'url(/app/img/inkwell.svg)');
+      }
     }
 
   });

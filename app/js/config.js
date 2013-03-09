@@ -30,16 +30,14 @@ define(function () {
     }
   }
 
-
-
   SEEDS_CONFIG = {
     api: {
-      base: "http://openseeds.io",
-      auth: "http://openseeds.io/auth/twitter"
+      base: "http://openseeds.io"
     },
     authRedirectPath: "#tweetlist", // No leading slash needed.  This becomes "[location of index.html]/#timeline".
     pointer: pointer
-  }
+  };
+  SEEDS_CONFIG.api.auth = SEEDS_CONFIG.api.base +"/auth/twitter";
 
 
 
