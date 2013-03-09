@@ -1,6 +1,87 @@
-AddType text/cache-manifest appcache # .appcache files served as text/cache-manifest
 
+# ----------------------------------------------------------------------
+# Gzip compression
+# ----------------------------------------------------------------------
+
+<IfModule mod_deflate.c>
+
+  # Force deflate for mangled headers developer.yahoo.com/blogs/ydn/posts/2010/12/pushing-beyond-gzipping/
+  <IfModule mod_setenvif.c>
+    <IfModule mod_headers.c>
+      SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
+      RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
+    </IfModule>
+  </IfModule>
+
+  # Compress all output labeled with one of the following MIME-types
+  # (for Apache versions below 2.3.7, you don't need to enable `mod_filter`
+  # and can remove the `<IfModule mod_filter.c>` and `</IfModule>` lines as
+  # `AddOutputFilterByType` is still in the core directives)
+  <IfModule mod_filter.c>
+    AddOutputFilterByType DEFLATE application/atom+xml \
+                                  application/javascript \
+                                  application/json \
+                                  application/rss+xml \
+                                  application/vnd.ms-fontobject \
+                                  application/x-font-ttf \
+                                  application/xhtml+xml \
+                                  application/xml \
+                                  font/opentype \
+                                  image/svg+xml \
+                                  image/x-icon \
+                                  text/css \
+                                  text/html \
+                                  text/plain \
+                                  text/x-component \
+                                  text/xml
+  </IfModule>
+
+</IfModule>
+
+
+
+# ----------------------------------------------------------------------
+# application cache
+# ----------------------------------------------------------------------
+
+AddType text/cache-manifest appcache
 <Files ~ "\.appcache">
     ExpiresActive On
     ExpiresDefault "access"
 </Files>
+
+
+
+# ----------------------------------------------------------------------
+# Expires headers (for better cache control)
+# ----------------------------------------------------------------------
+
+# this is only a start.  uncomment these and add more when go to production.
+
+<IfModule mod_expires.c>
+#  ExpiresActive on
+
+# Perhaps better to whitelist expires rules? Perhaps.
+#  ExpiresDefault                          "access plus 1 month"
+
+# cache.appcache needs re-requests in FF 3.6 (thanks Remy ~Introducing HTML5)
+#  ExpiresByType text/cache-manifest       "access plus 0 seconds"
+
+# Your document html
+#  ExpiresByType text/html                 "access plus 0 seconds"
+
+# Favicon (cannot be renamed)
+#  ExpiresByType image/x-icon              "access plus 1 week"
+
+# CSS and JavaScript
+#  ExpiresByType application/javascript    "access plus 1 year"
+#  ExpiresByType text/css                  "access plus 1 year"
+
+</IfModule>
+
+
+
+
+# ----------------------------------------------------------------------
+# see much more at https://github.com/h5bp/html5-boilerplate/blob/master/.htaccess
+# ----------------------------------------------------------------------

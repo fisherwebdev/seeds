@@ -7,6 +7,7 @@ define(['config', 'backbone', 'lib/carousel3D'], function (config, Backbone, Car
 
     initialize: function() {
       this.listenTo(app, "ajax-error", this.handleAjaxError)
+          .listenTo(app, "press", this.vibrate)
           .setUpCarousel();
     },
 
@@ -25,6 +26,12 @@ define(['config', 'backbone', 'lib/carousel3D'], function (config, Backbone, Car
       }
       else if (jqxhr && jqxhr.status === 403) { // If we are forbidden for another reason, CORS is probably to blame.
         alert("The server is forbidding you from using this application for an unknown reason.  Please try later.");
+      }
+    },
+
+    vibrate: function () {
+      if ("vibrate" in navigator) {
+        navigator.vibrate(12);
       }
     }
 

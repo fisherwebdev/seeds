@@ -8,19 +8,29 @@ define(['config', 'backbone', 'views/panelView'],
 
       template: _.template($("#seeds-template-auth").html()),
 
-      events: {
-        'click .button': 'authenticate',
-        'keyup input': 'validateCharCount'
+      events: function () {
+        var events = {
+          // Not only does Firefox not support keyup, but we want to handle copy-paste input too.
+          'focus input': 'startValidationTimer',
+          'blur input': 'clearValidationTimer',
+          'keydown': 'postOnEnterKey'
+        };
+        events[SEEDS_CONFIG.pointer.up + ' .button'] = 'authenticate'; // e.g. 'touchend .button' = 'authenticate'
+        return events;
       },
 
       initialize: function () { // overriding PanelView
         this.render();
-        this.$textfield = this.$el.find('input[type=text]').focus();
         this.bringToFront();
+        setTimeout(_.bind((function () { // setTimeout helps the timer start after the page is ready
+          this.$textfield = this.$el.find('input[type=text]').focus();
+        }), this), 1);
+
       },
 
       authenticate: function () {
         if (this.$el.hasClass('disabled')) return; // Do nothing if the text field has nothing in it.
+        app.trigger('press'); // AppView listens for this.
 
         // Build the encoded redirect url to pass to the server out of the current location and the configuration file
         var nicknameKey = encodeURIComponent(this.$textfield.val()),
@@ -38,13 +48,28 @@ define(['config', 'backbone', 'views/panelView'],
         window.location = (SEEDS_CONFIG.api.auth + "?screen_name=" + nicknameKey + "&url=" + url);
       },
 
-      validateCharCount: function (e) {
+      startValidationTimer: function (e) {
+        this.timerId = setInterval(_.bind(this.validateCharCount, this), 1000);
+      },
+
+      clearValidationTimer: function (e) {
+        clearTimeout(this.timerId);
+      },
+
+      validateCharCount: function () {
         count = this.$textfield.val().length;
         if (count < 1) {
           this.$el.addClass('disabled');
         }
         else {
           this.$el.removeClass('disabled');
+        }
+      },
+
+      postOnEnterKey: function (e) {
+        if (e.which === 13) {
+          e.preventDefault();
+          this.authenticate();
         }
       }
 
