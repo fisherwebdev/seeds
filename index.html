@@ -11,6 +11,17 @@
 
   <link rel="stylesheet" href="app/css/style.css">
 
+  <!-- scripts that unfortunately have to be loaded in the head -->
+  <script>
+    var addToHomeConfig = {
+      animationIn: 'fade',
+      lifespan: 10000,
+      expire: 60 * 24 * 3, // every three days
+      message: 'Yo!  Seeds is an app!  Save it to your homescreen!'
+      // touchIcon: true // if we had one
+    };
+  </script>
+  <script src="app/js/vendor/cubiq-home-screen/add2home.js"></script>
   <script src="app/js/vendor/modernizr/modernizr.custom.18415.js"></script>
 </head>
 <body>
@@ -44,6 +55,7 @@
     <div class="first stripe"><span></span></div>
     <div class="middle stripe"><span></span></div>
     <div class="stripe"><span></span></div>
+    <div class="refresh"></div>
   </li>
   <li data-view="createtweet"  class="createtweet-button">
     <div></div>

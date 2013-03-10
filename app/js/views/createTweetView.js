@@ -28,7 +28,9 @@ define(['config', 'backbone', 'views/panelView'],
       },
 
       bringToFront: function () { // overriding PanelView to provide focus
-        app.carousel.rotate(this.$el.data('carousel-index'));
+        var index = this.$el.data('carousel-index');
+        app.carousel.rotate(index);
+        $('header').removeClass().addClass('panel-' + index);
         // this.$textarea.focus(); // this is giving me trouble with the animation on android.  is there a solution?
         return this;
       },
@@ -72,7 +74,7 @@ define(['config', 'backbone', 'views/panelView'],
       postOnEnterKey: function (e) {
         if (e.which === 13) {
           e.preventDefault();
-          this.authenticate();
+          this.postTweet();
         }
       },
 

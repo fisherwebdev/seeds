@@ -15,7 +15,9 @@ define(['config', 'backbone'],
       },
 
       bringToFront: function () {
-        app.carousel.rotate(this.$el.data('carousel-index'));
+        var index = this.$el.data('carousel-index');
+        app.carousel.rotate(index);
+        $('header').removeClass().addClass('panel-' + index);
         return this;
       }
 

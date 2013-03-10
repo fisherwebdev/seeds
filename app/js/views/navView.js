@@ -30,7 +30,12 @@ define(['config', 'backbone'], function () {
     navigate: function (e) {
       app.trigger('press');
       var view = $(e.currentTarget).data('view');
-      app.router.navigate(view, {trigger: true});
+      if (view == "tweetlist" && $('header').hasClass('panel-1')) {
+        app.trigger('refresh');
+      }
+      else {
+        app.router.navigate(view, {trigger: true});
+      }
     }
 
   });

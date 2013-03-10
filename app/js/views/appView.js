@@ -6,6 +6,9 @@ define(['config', 'backbone', 'lib/carousel3D'], function (config, Backbone, Car
     el: '#seeds-app',
 
     initialize: function() {
+      if ($('html').hasClass('svg')) {
+        this.$el.addClass('use-svg');
+      }
       this.listenTo(app, "ajax-error", this.handleAjaxError)
           .listenTo(app, "press", this.vibrate)
           .setUpCarousel();

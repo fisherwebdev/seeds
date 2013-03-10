@@ -11,11 +11,19 @@ define(['config', 'backbone', 'models/tweet'],
       },
 
       initialize: function () {
+        this.listenTo(app, 'refresh', _.bind(this.handleRefresh, this));
         this.fetch({
+          xhrFields: {withCredentials: true}, // for CORS with session data
           success: this.setLocally,
-          error: _.bind(this.handleInitError, this),
-          xhrFields: {withCredentials: true} // for CORS with session data
+          error: _.bind(this.handleInitError, this)
         });
+      },
+
+      initWithLocals: function () {
+        var locals = this.getLocally();
+        if (locals) {
+          this.add(locals); // initialize with the stored tweets instead
+        }
       },
 
       createTweet: function (text) {
@@ -35,15 +43,6 @@ define(['config', 'backbone', 'models/tweet'],
         this.create(attributes, options);
       },
 
-      updateTweets: function () {
-        this.update({
-          remove: false,
-          success: this.setLocally,
-          error: _.bind(this.handleUpdateError, this),
-          xhrFields: {withCredentials: true} // for CORS with session data
-        });
-      },
-
       getLocally: function () {
         return JSON.parse(localStorage.getItem('tweetlist'));
       },
@@ -52,33 +51,42 @@ define(['config', 'backbone', 'models/tweet'],
         localStorage.setItem('tweetlist', JSON.stringify(collection));
       },
 
-      handleInitError: function (collection, jqxhr, options) {
-        var locals = this.getLocally();
-        if (locals) {
-          this.add(locals); // initialize with the stored tweets instead
-        }
-        app.trigger("ajax-error", jqxhr);
+      triggerError: function (jqxhr) {
+        app.trigger("ajax-error", jqxhr); // handle the 403 error or perhaps others.  see AppView.
       },
 
-      handleTweetSuccess: function (model, response, jqxhr) {
+      handleRefresh: function () {
+        this.fetch({
+          xhrFields: {withCredentials: true}, // for CORS with session data
+          success: this.setLocally,
+          error: _.bind(this.handleAjaxError, this),
+          update: true,
+          remove: false
+        });
+      },
+
+      handleInitError: function (collection, jqxhr) {
+        this.initWithLocals();
+        this.triggerError(jqxhr);
+      },
+
+      handleTweetSuccess: function () {
         app.trigger("tweet-success");  // CreateTweetView is listening for this so it can clear the text.
       },
 
-      handleTweetError: function (model, jqxhr, options) {
+      handleTweetError: function (model, jqxhr) {
         this.remove(model); // the Tweet view is listening for this removal and will remove itself from the DOM.
-
         if (jqxhr.status !== 403) {
           var tryAgain = confirm("That last tweet didn't go through.  Try Again?"); // give the user another chance.
           if (tryAgain) {
             this.createTweet(model.get('text'));
           }
         }
-
-        app.trigger("ajax-error", jqxhr); // handle the 403 error or perhaps others.  see AppView.
+        this.triggerError(jqxhr);
       },
 
-      handleUpdateError: function (collection, jqxhr, options) {
-        app.trigger("ajax-error", jqxhr);
+      handleAjaxError: function (collection, jqxhr) {
+        this.triggerError(jqxhr);
       }
 
     });
