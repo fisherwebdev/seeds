@@ -202,7 +202,7 @@ header li {
  *
  */
 .createtweet .wrap, .auth .wrap {
-    padding: 1em 0.5em;
+    padding: 1em 0.5em 0;
 }
 .createtweet textarea {
     font-size: 1em;
@@ -222,7 +222,6 @@ header li {
     color: #800;
 }
 .button {
-    float: left;
     padding: 1em;
     background: #ccc;
     float: right;

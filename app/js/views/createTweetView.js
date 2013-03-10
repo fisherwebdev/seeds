@@ -15,11 +15,19 @@ define(['config', 'backbone', 'views/panelView'],
           'blur textarea': 'clearValidationTimer',
           'keydown': 'postOnEnterKey'
         };
-        events[SEEDS_CONFIG.pointer.up + ' .button'] = 'postTweet'; // e.g. 'touchend .button' = 'postTweet'
+        //events[SEEDS_CONFIG.pointer.up + ' #seeds-tweet-button'] = 'postTweet'; // e.g. 'touchend .button' = 'postTweet'
         return events;
       },
 
       initialize: function () { // overriding PanelView
+
+        // this is a last minute hack because i can't get this working on the iphone without it.  original commented out in events above.
+        $(document).on('touchend', _.bind(function (e) {
+          if (e.target.id == "seeds-tweet-button") {
+            this.postTweet()
+          }
+        }, this));
+
         this.render()
             .listenTo(app, 'tweet-success', this.clearText);
         this.$textarea = this.$el.find('textarea');

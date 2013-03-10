@@ -35,14 +35,10 @@ define([
       // supporting methods
 
       tweetCollectionRoute: function (viewName, viewClass) {
-        this.ensureApp();
-        var tweetList = app.collections.tweetlist = app.collections.tweetlist || new TweetList;
-        this.bringViewToFront(viewName, viewClass, {collection: tweetList});
-      },
-
-      ensureApp: function () {
         this.ensureChrome();
         this.ensureUser();
+        var tweetList = app.collections.tweetlist = app.collections.tweetlist || new TweetList;
+        this.bringViewToFront(viewName, viewClass, {collection: tweetList});
       },
 
       ensureChrome: function () {
@@ -63,7 +59,7 @@ define([
 
       bringViewToFront: function (viewName, viewClass, options) {
         if (!app.views[viewName]) {
-          app.views[viewName] = new viewClass(options);
+          app.views[viewName] = new viewClass(options); // e.g. app.views.tweetList = new TweetListView({collection: tweetlist});
         }
         else {
           app.views[viewName].bringToFront();

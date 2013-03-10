@@ -7,7 +7,19 @@
   <meta name="description" content="A Simple, Free and Open Twitter Client">
   <meta name="author" content="Bill Fisher">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1, user-scalable=0"/>
+  <!-- Note the width=device-width in the viewport meta tag has been removed to avoid letterboxing on the iPhone5.
+       I'm unclear on the implications of this. -->
+  <meta name="viewport" content="initial-scale=1.0 maximum-scale=1, user-scalable=0"/>
+
+  <!-- Hides the URL bar and back button on iPhone, so make sure you have an interface that does not rely on that.  -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <link rel="apple-touch-icon" href="app/img/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="app/img/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="app/img/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="app/img/apple-touch-icon-144x144.png" />
+
+  <!-- We could also add iOS start up images here too.  See: http://taylor.fausak.me/2012/03/27/ios-web-app-icons-and-startup-images/ -->
 
   <link rel="stylesheet" href="app/css/style.css">
 
@@ -17,8 +29,8 @@
       animationIn: 'fade',
       lifespan: 10000,
       expire: 60 * 24 * 3, // every three days
-      message: 'Yo!  Seeds is an app!  Save it to your homescreen!'
-      // touchIcon: true // if we had one
+      message: 'Yo!  Seeds is an app!  Save it to your homescreen!',
+      touchIcon: true
     };
   </script>
   <script src="app/js/vendor/cubiq-home-screen/add2home.js"></script>
@@ -29,8 +41,19 @@
 
 <header>
   <div class="core">
-    <h1>Seeds</h1>
+    <h1 data-view="">Seeds</h1>
   </div>
+  <ul id="seeds-nav">
+    <li data-view="tweetlist" class="tweetlist-button">
+      <div class="first stripe"><span></span></div>
+      <div class="middle stripe"><span></span></div>
+      <div class="stripe"><span></span></div>
+      <div class="refresh"></div>
+    </li>
+    <li data-view="createtweet"  class="createtweet-button">
+      <div></div>
+    </li>
+  </ul>
 </header>
 <section id="seeds-app" class=core>
   <div id="seeds-carousel">
@@ -50,18 +73,6 @@
   </div>
 </script>
 
-<script type="text/template" id="seeds-template-nav">
-  <li data-view="tweetlist" class="tweetlist-button">
-    <div class="first stripe"><span></span></div>
-    <div class="middle stripe"><span></span></div>
-    <div class="stripe"><span></span></div>
-    <div class="refresh"></div>
-  </li>
-  <li data-view="createtweet"  class="createtweet-button">
-    <div></div>
-  </li>
-</script>
-
 <script type="text/template" id="seeds-template-tweet">
   <div class="col-1">
     <img class="user profile-image" height="48px" width="48px" src="<%= user.profile_image_url %>" alt="" />
@@ -77,12 +88,11 @@
   <div class="wrap">
     <textarea />
     <div class="chars-left"><span class="countdown">140</span><span>&nbsp;characters left</span></div>
-    <div class="button">Tweet</div>
+    <div id="seeds-tweet-button" class="button">Tweet</div>
   </div>
 </script>
 
 
 <script data-main="app/js/main.js" src="app/js/vendor/requirejs/require.js"></script>
-
 </body>
 </html>
